@@ -23,6 +23,8 @@ server.get('/',(req,res)=>{
 const AdminRouter = require("./router/AdminRouter")
 server.use('/admin',AdminRouter)
 
+
+
 server.listen(port,()=>{
     console.log("this server is running")
 })
