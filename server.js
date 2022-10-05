@@ -31,6 +31,11 @@ server.use('/studentClass',studentClassRouter)
 const studentRouter = require("./router/studentRouter")
 server.use('/student',studentRouter)
 
+/* -------------------------------------------------------- subject crude router -------------------------------------------------------- */
+const subjectRouter = require("./router/subjectRouter")
+server.use('/subject',subjectRouter)
+
+
 server.listen(port,()=>{
     console.log("this server is running")
 })
