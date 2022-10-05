@@ -60,7 +60,7 @@ exports.getoneResult = async(req,res)=>{
     }
 }
 
-const checkResultin = async(req,res) =>{
+exports.checkResultin = async(req,res) =>{
     const {registrationNo,email} = req.params 
 
     try {
@@ -118,6 +118,7 @@ exports.deleteresult = async(req,res)=>{
         )
 
         const deleteResult = await result.deleteOne({_id: resultId})
+        res.json(deleteResult)
     } catch (error) {
         res.json({error:error.message})
     }
