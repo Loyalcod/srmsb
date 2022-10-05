@@ -49,9 +49,52 @@ exports.loginAdmin =async(req,res)=>{
             accessToken,
             refreshToken
         })
-        
+
     } catch (error) {
         res.json({error:error.message})
 
+    }
+}
+
+exports.refreshLoginAdmin = async(req,res)=>{
+    const cookies = req.cookies
+    if(!cookies?.jwt) return res.status(403).json({error:"cookie not found"})
+    const refreshToken = cookies?.jwt
+
+    try {
+        const cookieExist = await Admin.exists({refreshToken})
+        if(!cookieExist) return res.status(403).json({error:"refreshToken not found"})
+
+        // verify jwt
+        let admin_details;
+        jwt.verify(refreshToken,process.env.REFRESH_JWT_SECRET,(err,payload)=>{
+            if(err) return res.status(403).json({error:"refresh token not found here"})
+            admin_details = payload
+        })
+
+        const newAccessToken = jwt.sign({admin_details},process.env.ACCESS_JWT_SECRET,{expiresIn: "10m"})
+
+        res.json({
+            newAccessToken
+        })
+    } catch (error) {
+        res.json({error:error.message})
+    }
+}
+
+exports.logoutAdmin = async(req,res)=>{
+    const cookie = req.cookies
+    if(!cookie?.jwt) return res.sendStatus(204)
+    const refreshCookie = cookie?.jwt
+
+    try {
+        const deleteCookie = await Admin.updateOne(
+            {refreshToken:refreshCookie},
+            {$set: {refreshToken:null}}
+        )
+        res.sendStatus(204)
+
+    } catch (error) {
+        res.json({error:error.message})
     }
 }
