@@ -23,7 +23,8 @@ server.get('/',(req,res)=>{
 const AdminRouter = require("./router/AdminRouter")
 server.use('/admin',AdminRouter)
 
-
+const studentClassRouter = require("./router/studentClassRouter")
+server.use('/studentClass',studentClassRouter)
 
 server.listen(port,()=>{
     console.log("this server is running")
