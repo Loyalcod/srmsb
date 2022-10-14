@@ -16,7 +16,7 @@ router.get('/',verifyAuthentication, getresult)
 router.get('/:resultId',verifyAuthentication, getoneResult)
 
 /* --------------------------------------------------------- check result router -------------------------------------------------------- */
-router.get('/:registrationNo/:email', checkResultin)
+router.get('/:email/:registrationNo', checkResultin)
 
 /* ------------------------------------------------------ update one result router ------------------------------------------------------ */
 router.patch('/:resultId',verifyAuthentication, updateresult)

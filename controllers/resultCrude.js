@@ -65,10 +65,10 @@ exports.checkResultin = async(req,res) =>{
 
     try {
 
-        const resultExist = await student.exists({registrationNo,email})
-        if(!resultExist) return res.status(401).json({error:"result don't exist"})
+        const resultExist = await student.exists({email, registrationNo})
+        if(!resultExist) return res.status(401).json("result don't exist")
 
-        const checkesult = await student.find({registrationNo,email})
+        const checkesult = await student.find({email,registrationNo})
         .populate('classId')
         .populate({
             path: 'resultId',
